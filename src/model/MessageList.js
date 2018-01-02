@@ -1,4 +1,4 @@
-import ClerkMessage from 'Message';
+import ClerkMessage from './Message';
 
 class MessageList {
 
