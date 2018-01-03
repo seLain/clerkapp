@@ -29,14 +29,13 @@ class UserLoginScene extends Component {
     const { username, password } = this.state;
 
     if(!username || !password) {
-      Alert.alert('帳號或是密碼空白');
+      Alert.alert('Account or Password Empty');
       return;
     }
 
     /* #CODE_SECTION */
     /*    vetify username / password */
-    /*
-    var login_url = Config.SERVER_URL + '/verify_app_login/';
+    var login_url = Config.SERVER_URL + '/inventorycheck/app_login';
     let response = await fetch(login_url, 
                                {method: 'POST',
                                 headers: {
@@ -49,20 +48,19 @@ class UserLoginScene extends Component {
                                 })
                                },);
     let responseJSON = await response.json();
-    */
-    //if(responseJSON.verified == 'true'){
+    
+    if(responseJSON.verified == 'true'){
     	/* product data loading */
     	/* this.productDataLoading(); */
     	/* update task list from ERP server */
     	/* var tasks = this.updateTask(); */
       /* Alert.alert(tasks.list.length.toString()); */
     	/* go to mainmenu */
-    //	navigate('UserMainScene');
-    //}else{
-    //  Alert.alert('帳號或是密碼錯誤');
-    //}
+    	navigate('UserMainScene');
+    }else{
+      Alert.alert('Account or Password Error');
+    }
 
-    navigate('UserMainScene');  // fake
     /* #SECTION_CODE */
   }
   

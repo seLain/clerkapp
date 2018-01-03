@@ -33,7 +33,7 @@ class UserMainScene extends Component {
   async updateMessage(){
     
     /* retreive task data from server */
-    let response = await fetch(Config.SERVER_URL + '/update_clerk_messages/', 
+    let response = await fetch(Config.SERVER_URL + '/inventorycheck/update_clerk_messages/', 
                                {method: 'POST',
                                 headers: {
                                   'Accept': 'application/json',
