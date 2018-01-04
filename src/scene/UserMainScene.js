@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CleanNavigator from './Utils.js';
+import { BackHandler } from 'react-native';
 
 import { View, 
          StyleSheet, 
@@ -30,6 +31,16 @@ class UserMainScene extends Component {
         {name: '訊息1', id: 1}, ]),
     }
     this.updateMessage();
+    /* bind onLogout to enable deep callback */
+    this.onLogout = this.onLogout.bind(this);
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.onLogout);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.onLogout);
   }
 
   async updateMessage(){
@@ -87,6 +98,7 @@ class UserMainScene extends Component {
       { cancelable: false }
     )
   	/* #SECTION_CODE */
+    return true;
   }
 
   inventoryUpdate(){
