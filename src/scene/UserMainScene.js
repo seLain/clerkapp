@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CleanNavigator from './Utils.js';
 
 import { View, 
          StyleSheet, 
@@ -69,13 +70,22 @@ class UserMainScene extends Component {
 
   onLogout(){
   	/* #CODE_SECTION */
-  	/*   logout  */
-  	
-  	/*   inventory update function call */
-  	this.inventoryUpdate();
-    /*   rediret to login page */
-    const { navigate } = this.props.navigation;
-    navigate('UserLoginScene');
+  	/*   logout alert  */
+    Alert.alert(
+      'Logout Alert',
+      'Sure to logout ?',
+      [
+        {text: 'OK', onPress: () => { 
+            console.log('OK Pressed'); 
+            /*   inventory update function call */
+            this.inventoryUpdate();
+            /*   rediret to login page */
+            CleanNavigator.resetNavigation(this, 'UserLoginScene', {});
+        }},
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+      { cancelable: false }
+    )
   	/* #SECTION_CODE */
   }
 
