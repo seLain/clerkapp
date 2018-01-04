@@ -78,11 +78,6 @@ class UserDoneScene extends Component {
   render() {
   	return (
   		<View style={styles.container}>
-        <View style={styles.textWrapper}>
-          <Text style={styles.title}>
-          Done List
-          </Text>
-        </View>
         <View style={styles.taskWrapper}>
     		  <ListView
   	        dataSource={this.state.dataSource}

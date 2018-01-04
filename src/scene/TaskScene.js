@@ -125,11 +125,6 @@ class TaskScene extends Component {
 		const {on_stock_count, storage_count} = this.state;
 	  	return (
 	  		<View style={styles.container}>
-	  		  <View style={styles.textWrapper}>
-		          <Text style={styles.title}>
-		          Job : {this.state.store} Inventory Check
-		          </Text>
-		      </View>
 		      <View style={styles.taskWrapper}>
 		          <View style={styles.taskItem}>
 		  		    <Text style={styles.fieldName}>

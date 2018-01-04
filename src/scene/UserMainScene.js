@@ -101,11 +101,6 @@ class UserMainScene extends Component {
   render() {
   	return (
       <View style={styles.container}>
-        <View style={styles.textWrapper}>
-          <Text style={styles.title}>
-          Main Menu
-          </Text>
-        </View>
     		<View style={styles.func_container}>
             <View style={styles.btnRow}>
               <View style={styles.btnWrapper}>

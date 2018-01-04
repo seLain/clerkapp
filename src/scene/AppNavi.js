@@ -7,13 +7,40 @@ import UserDoneScene from './UserDoneScene.js'
 import TaskScene from './TaskScene.js'
 
 export const AppNavi = StackNavigator({
-    UserLoginScene: { 
-    		screen: UserLoginScene,
-    	},
-    UserMainScene: { screen: UserMainScene},
-    UserToDoScene: { screen: UserToDoScene},
-    UserDoneScene: { screen: UserDoneScene},
-    TaskScene: { screen: TaskScene},
-});
+	    UserLoginScene: { 
+	    		screen: UserLoginScene,
+	    		navigationOptions: {
+		    		header: null,
+	    		},
+	    	},
+	    UserMainScene: {
+	    		screen: UserMainScene,
+	    		navigationOptions: {
+	    			title: 'MainMenu',
+	    			headerLeft: null,
+	    		},
+	    	},
+	    UserToDoScene: { 
+	    		screen: UserToDoScene,
+	    		navigationOptions: {
+	    			title: 'Jobs ToDo',
+	    			headerLeft: null,
+	    		},
+	    	},
+	    UserDoneScene: { 
+	    		screen: UserDoneScene,
+	    		navigationOptions: {
+	    			title: 'Jobs Done',
+	    			headerLeft: null,
+	    		},
+	    	},
+	    TaskScene: { 
+	    		screen: TaskScene,
+	    		navigationOptions: {
+	    			title: 'Job',
+	    			headerLeft: null,
+	    		},
+	    	},
+	});
 
 export default AppNavi;

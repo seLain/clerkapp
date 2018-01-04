@@ -98,11 +98,6 @@ class UserToDoScene extends Component {
   render() {
   	return (
   		<View style={styles.container}>
-        <View style={styles.textWrapper}>
-          <Text style={styles.title}>
-          ToDo List
-          </Text>
-        </View>
         <View style={styles.taskWrapper}>
     		  <ListView
   	        dataSource={this.state.dataSource}

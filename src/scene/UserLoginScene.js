@@ -167,6 +167,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     // demonstrate the dimensions of the image
     alignSelf: 'center',
+    // margins
+    marginTop: 40,
   },
 
 });
