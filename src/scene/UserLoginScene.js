@@ -56,7 +56,7 @@ class UserLoginScene extends Component {
     	/* var tasks = this.updateTask(); */
       /* Alert.alert(tasks.list.length.toString()); */
     	/* go to mainmenu */
-    	navigate('UserMainScene');
+    	navigate('UserMainScene', { username: this.state.username });
     }else{
       Alert.alert('Account or Password Error');
     }

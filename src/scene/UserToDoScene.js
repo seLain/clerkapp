@@ -22,6 +22,7 @@ class UserToDoScene extends Component {
   	const {navigator} = this.props;
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
+      username: this.props.navigation.state.params.username,
       taskList: new TaskList('ToDoList'),
       dataSource: this.ds.cloneWithRows([  /* to avoid empty section warning */
         {name: 'Todo Job 1: Empty', id: 1}, ]),
@@ -35,14 +36,14 @@ class UserToDoScene extends Component {
   async updateTask(){
     
     /* retreive task data from server */
-    let response = await fetch(Config.SERVER_URL + '/update_task/', 
+    let response = await fetch(Config.SERVER_URL + '/inventorycheck/update_task', 
                                {method: 'POST',
                                 headers: {
                                   'Accept': 'application/json',
                                   'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify({
-                                  username: this.props.username,
+                                  username: this.state.username,
                                 })
                                });
     let responseJSON = await response.json();
@@ -63,7 +64,7 @@ class UserToDoScene extends Component {
   	const { navigate } = this.props.navigation;
   	navigate('TaskScene', 
   			{
-  			username: this.props.username,
+  			  username: this.state.username,
       		task_id: task.id,
         	product_name: task.product,
         	product_id: task.product_id,
@@ -72,7 +73,7 @@ class UserToDoScene extends Component {
         	storage_count: task.storage_count,
         	date: task.date,
         	store: task.store
-      		});
+      	});
   	/* #SECTION_CODE */
   }
 
@@ -82,7 +83,7 @@ class UserToDoScene extends Component {
 
   onReturnClick(){
   	const { navigate } = this.props.navigation;
-  	navigate('UseMainScene', { username: this.props.username });
+  	navigate('UserMainScene', { username: this.state.username });
   }
 
   status_render(status){

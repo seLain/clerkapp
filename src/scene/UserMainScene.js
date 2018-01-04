@@ -23,6 +23,7 @@ class UserMainScene extends Component {
     this.tasks = this.props.tasks;
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
+      username: this.props.navigation.state.params.username,
       messageList: new MessageList('MessageList'),
       dataSource: this.ds.cloneWithRows([  /* to avoid empty section warning */
         {name: '訊息1', id: 1}, ]),
@@ -40,7 +41,7 @@ class UserMainScene extends Component {
                                   'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify({
-                                  username: this.props.username,
+                                  username: this.state.username,
                                 })
                                });
     let responseJSON = await response.json();
@@ -58,12 +59,12 @@ class UserMainScene extends Component {
 
   onToDoTasks(){
   	const { navigate } = this.props.navigation;
-  	navigate('UserToDoScene', { username: this.props.username });
+  	navigate('UserToDoScene', { username: this.state.username });
   }
 
   onDoneTasks(){
   	const { navigate } = this.props.navigation;
-  	navigate('UserDoneScene', { username: this.props.username });
+  	navigate('UserDoneScene', { username: this.state.username });
   }
 
   onLogout(){
@@ -84,14 +85,14 @@ class UserMainScene extends Component {
   }
 
   async onReGen(){
-    let response = await fetch(Config.SERVER_URL + '/regenerate_tasks/', 
+    let response = await fetch(Config.SERVER_URL + '/inventorycheck/regenerate_tasks', 
                          {method: 'POST',
                           headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json',
                           },
                           body: JSON.stringify({
-                            username: this.props.username,
+                            username: this.state.username,
                           })
                          });
     let responseJSON = await response.json();

@@ -17,24 +17,22 @@ class TaskScene extends Component {
 	constructor(props) {
 	  	super(props);
 	  	/* #MOCK_DATA */
+	  	this.state = this.props.navigation.state.params;
+	  	/*
 	  	this.state = {
-	      on_stock_count: this.props.on_stock_count,
-	      storage_count: this.props.storage_count,
-	      date: this.props.date
-	    }
+	  	  username: this.props.navigation.state.params.username,
+	  	  task_id: this.props.navigation.state.params.task_id,
+	      on_stock_count: this.props.navigation.state.params.on_stock_count,
+	      storage_count: this.props.navigation.state.params.storage_count,
+	      date: this.props.navigation.state.params.date,
+	      store: this.props.navigation.state.params.store
+	    }*/
 	  	/* #DATA_MOCK */
 	  	/* #CODE_SECTION */
 	  	/*   load product data */
 	  	/*   load inprogress check data */
 	  	/*   record task start time */
 	  	/* #SECTION_CODE */
-    }
-
-    toNext(data) {
-	    const { navigator } = this.props;
-	    if(navigator) {
-	      navigator.push(data)
-	    }
     }
 
     async onSendClick() {
@@ -71,14 +69,14 @@ class TaskScene extends Component {
 	    /*   record task complete time */
 
 	    /*   directly send to server */
-	    let response = await fetch(Config.SERVER_URL + '/report_inventory/', 
+	    let response = await fetch(Config.SERVER_URL + '/inventorycheck/report_inventory/', 
                                {method: 'POST',
                                 headers: {
                                   'Accept': 'application/json',
                                   'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify({
-                                  task_id: this.props.task_id,
+                                  task_id: this.state.task_id,
                                   on_stock_count: this.state.on_stock_count,
 							      storage_count: this.state.storage_count,
 							      date: this.state.date
@@ -93,13 +91,8 @@ class TaskScene extends Component {
 	    /*   put task to done task list */
 
 	    /*   back to UserToDoScene */
-	    this.toNext({
-	      name: 'UserToDoScene',
-	      component: UserToDoScene,
-	      params: {
-	      	username: this.props.username,
-	      }
-	    });
+	    const { navigate } = this.props.navigation;
+	    navigate('UserToDoScene', { username: this.state.username });
 	    /* #SECTION_CODE */
 	}
 
@@ -108,14 +101,14 @@ class TaskScene extends Component {
         /* #CODE_SECTION */
 
         /*   directly send to server */
-	    let response = await fetch(Config.SERVER_URL + '/inprogress_inventory/', 
+	    let response = await fetch(Config.SERVER_URL + '/inventorycheck/inprogress_inventory/', 
                                {method: 'POST',
                                 headers: {
                                   'Accept': 'application/json',
                                   'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify({
-                                  task_id: this.props.task_id,
+                                  task_id: this.state.task_id,
                                   on_stock_count: this.state.on_stock_count,
 							      storage_count: this.state.storage_count,
 							      date: this.state.date
@@ -123,13 +116,8 @@ class TaskScene extends Component {
                                });
 	    let responseJSON = await response.json();
 
-        this.toNext({
-	      name: 'UserToDoScene',
-	      component: UserToDoScene,
-	      params: {
-	      	username: this.props.username,
-	      }
-	    });
+	    const { navigate } = this.props.navigation;
+	    navigate('UserToDoScene', { username: this.state.username });
 	    /* #SECTION_CODE */
 	}
 
@@ -139,7 +127,7 @@ class TaskScene extends Component {
 	  		<View style={styles.container}>
 	  		  <View style={styles.textWrapper}>
 		          <Text style={styles.title}>
-		          Job : {this.props.store} Inventory Check
+		          Job : {this.state.store} Inventory Check
 		          </Text>
 		      </View>
 		      <View style={styles.taskWrapper}>
@@ -148,7 +136,7 @@ class TaskScene extends Component {
 		  		    Product 
 		  		    </Text>
                     <Text style={styles.fieldBody}>
-		  		    {this.props.product_name}
+		  		    {this.state.product_name}
 		  		    </Text>
 		  		  </View>
 		  		  <View style={styles.taskItem}>
@@ -156,7 +144,7 @@ class TaskScene extends Component {
 		  		    Product ID
 		  		    </Text>
 		  		    <Text style={styles.fieldBody}>
-		  		    {this.props.product_id}
+		  		    {this.state.product_id}
 		  		    </Text>
 		  		  </View>
 		  		  <View style={styles.taskItem}>
@@ -164,7 +152,7 @@ class TaskScene extends Component {
 		  		    Unit 
 		  		    </Text>
 		  		    <Text style={styles.fieldBody}>
-		  		    {this.props.product_unit}
+		  		    {this.state.product_unit}
 		  		    </Text>
 		  		  </View>
 		  		  <View style={styles.taskItem}>

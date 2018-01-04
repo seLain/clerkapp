@@ -21,6 +21,7 @@ class UserDoneScene extends Component {
   	
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
+      username: this.props.navigation.state.params.username,
       taskList: new TaskList('DoneList'),
       dataSource: this.ds.cloneWithRows([
       	{name: 'Job Done 1: Empty', id: 1}, ]),
@@ -35,14 +36,14 @@ class UserDoneScene extends Component {
   async updateTask(){
     
     /* retreive task data from server */
-    let response = await fetch(Config.SERVER_URL + '/update_done_task/', 
+    let response = await fetch(Config.SERVER_URL + '/inventorycheck/update_done_task/', 
                                {method: 'POST',
                                 headers: {
                                   'Accept': 'application/json',
                                   'Content-Type': 'application/json',
                                 },
                                 body: JSON.stringify({
-                                  username: this.props.username,
+                                  username: this.state.username,
                                 })
                                });
     let responseJSON = await response.json();
@@ -58,31 +59,13 @@ class UserDoneScene extends Component {
 
   }
 
-  onClickTask(task){
-  	
-  	/* mark the clicked task from done to todo */
-  	/* move the clicked task to todo list */
-  	const { navigate } = this.props.navigation;
-  	navigate('RedoTaskScene', 
-  			{
-        		username: this.props.username,
-        		task_id: task.id,
-        		product_name: task.product,
-        		product_id: task.product_id,
-        		product_unit: task.product_unit,
-        		on_stock_count: task.on_stock_count,
-        		storage_count: task.storage_count,
-        		date: task.date
-      		});
-  }
-
   onUpdateClick(){
     this.updateTask();
   }
 
   onReturnClick(){
   	const { navigate } = this.props.navigation;
-  	navigate('UseMainScene', { username: this.props.username });
+  	navigate('UserMainScene', { username: this.state.username });
   }
 
   status_render(status){
@@ -105,16 +88,12 @@ class UserDoneScene extends Component {
   	        dataSource={this.state.dataSource}
   	        renderRow={(rowData) => 
               <View style={styles.taskItem}>
-                  <TouchableHighlight onPress={ () => {this.onClickTask(rowData)}}>
-                    <Text style={{marginTop:3, fontSize: 18, color:'red'}}>
-                      {this.status_render(rowData.status)}
-                    </Text>
-                  </TouchableHighlight>
-                  <TouchableHighlight onPress={ () => {this.onClickTask(rowData)}}>
-                    <Text style={{marginTop:3, fontSize: 18, color:'black'}}>
-                      {rowData.name}
-                    </Text>
-                  </TouchableHighlight>
+                  <Text style={{marginTop:3, fontSize: 18, color:'red'}}>
+                    {this.status_render(rowData.status)}
+                  </Text>
+                  <Text style={{marginTop:3, fontSize: 18, color:'black'}}>
+                    {rowData.name}
+                  </Text>
               </View>
             }
   	      />
